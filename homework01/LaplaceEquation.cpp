@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "utils.h"
+#include <cmath>
 
 #define N 100
 
@@ -15,7 +16,7 @@ double residual(double*u, double*f){
             res += (-u[i-1] + 2*u[i] - u[i-1] - f[i])*(-u[i-1] + 2*u[i] - u[i-1] - f[i]);
         }
     }
-    return res;
+    return sqrt(res);
 }
 
 int main(int argc, char** argv) {
