@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
       f[i] = 1;
   }
 
-  printf("%d\n",residual(u,f));
+  printf("%f\n",residual(u,f));
 
   return 0;
 }
