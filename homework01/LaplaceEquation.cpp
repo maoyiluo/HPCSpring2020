@@ -70,7 +70,6 @@ void iteration(int N, std::string method, double* u){
         // printf("res: %f, iter: %d\n", residual(u,f,h,N), iteration);
     }
 
-    printf("%f\n", residual(u,f,h,N));
     free(new_u);
     free(f);
 }
