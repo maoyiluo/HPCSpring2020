@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     }
     double time = t.toc();
     double flops = 2*m*n*k*NREPEATS/time/(1<<30); // TODO: calculate from m, n, k, NREPEATS, time
-    double bandwidth = (2*m*m + 2*m*m*m)*NREPEATS/time/(1<<30); // TODO: calculate from m, n, k, NREPEATS, time
+    double bandwidth = (4*m*n*k)*NREPEATS/time/(1<<30); // TODO: calculate from m, n, k, NREPEATS, time
     printf("%10ld %10f %10fG %10fG\n", p, time, flops, bandwidth);
 
     free(a);
