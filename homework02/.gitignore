@@ -1,2 +1,5 @@
-*.out
-Dockerfile
+*
+
+!*.cpp
+!*.c
+!*.h
