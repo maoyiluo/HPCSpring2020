@@ -29,8 +29,8 @@ void MMult1(long m, long n, long k, double *a, double *b, double *c) {
     for (long j = 0; j < n; j=j+BLOCK_SIZE) {
       for (long p = 0; p < k; p=p+BLOCK_SIZE) {
         for (long i = 0; i < m; i=i+BLOCK_SIZE) {
-          for(long c_1 = i; c_1 < i+BLOCK_SIZE; c++){
-            for(long c_2 = p; c_2 < p+BLOCK_SIZE; d++){
+          for(long c_1 = i; c_1 < i+BLOCK_SIZE; c_1++){
+            for(long c_2 = p; c_2 < p+BLOCK_SIZE; c_2++){
               for(long f = 0; f < n; f++){
                 c[c_1*m + c_2] += a[c_1*m + f]*b[c_2*p + f];
               }
