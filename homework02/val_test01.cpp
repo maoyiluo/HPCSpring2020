@@ -83,7 +83,8 @@ void f ( int n )
     cout << "  " << i << "  " << x[i] << "\n";
   }
 
-  delete [] x;
+  free(x);
+  // delete [] x;
 
   return;
 }
