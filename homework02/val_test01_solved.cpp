@@ -77,14 +77,14 @@ void f ( int n )
   x[1] = 1;
   cout << "  " << 1 << "  " << x[1] << "\n";
 
-  for ( i = 2; i <= n; i++ )  // i<n rather than i <= n.
+  for ( i = 2; i < n; i++ )  // i<n rather than i <= n.
   {
     x[i] = x[i-1] + x[i-2];
     cout << "  " << i << "  " << x[i] << "\n";
   }
 
 
-  delete [] x; //free(x) because we use 'malloc'. Use delete when we use 'new';
+  free(x);// because we use 'malloc'. Use delete when we use 'new';
 
   return;
 }

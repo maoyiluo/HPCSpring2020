@@ -25,19 +25,17 @@ void MMult0(long m, long n, long k, double *a, double *b, double *c) {
 }
 
 void MMult1(long m, long n, long k, double *a, double *b, double *c) {
-  // TODO: See instructions below
-    for (long j = 0; j < n; j=j+BLOCK_SIZE) {
-      for (long p = 0; p < k; p=p+BLOCK_SIZE) {
-        for (long i = 0; i < m; i=i+BLOCK_SIZE) {
-          for(long c_1 = i; c_1 < i+BLOCK_SIZE; c_1++){
-            for(long c_2 = p; c_2 < p+BLOCK_SIZE; c_2++){
-              for(long f = 0; f < n; f++){
-                c[c_1*m + c_2] += a[c_1*m + f]*b[f*p+c_2];
-              }
-            }
+  #pragma omp parallel for
+  for(long j = 0; j < n; j=j+BLOCK_SIZE){
+    for(long f = 0; f < k; f++){
+      for(long c_2 = 0; c_2 < BLOCK_SIZE; c_2++){
+        for(long i = 0; i < m; i=i+BLOCK_SIZE){
+          for(long c_1 = 0; c_1 < BLOCK_SIZE; c_1++){
+              c[(i+c_1)+(j+c_2)*m] += a[(i+c_1) + f*m]*b[f+(j+c_2)*k]; 
           }
         }
       }
+    }
   }
 }
 
@@ -60,19 +58,20 @@ int main(int argc, char** argv) {
     for (long i = 0; i < k*n; i++) b[i] = drand48();
     for (long i = 0; i < m*n; i++) c_ref[i] = 0;
     for (long i = 0; i < m*n; i++) c[i] = 0;
-
+    
+    Timer t;
+    t.tic();
     for (long rep = 0; rep < NREPEATS; rep++) { // Compute reference solution
       MMult0(m, n, k, a, b, c_ref);
     }
-
-    Timer t;
+    double time_0 = t.toc();
     t.tic();
     for (long rep = 0; rep < NREPEATS; rep++) {
       MMult1(m, n, k, a, b, c);
     }
     double time = t.toc();
-    double flops = 0; // TODO: calculate from m, n, k, NREPEATS, time
-    double bandwidth = 0; // TODO: calculate from m, n, k, NREPEATS, time
+    double flops = 2*m*n*k*NREPEATS/time/1e9; // TODO: calculate from m, n, k, NREPEATS, time
+    double bandwidth = (2*m*n*BLOCK_SIZE*BLOCK_SIZE + 2*m*n*k*BLOCK_SIZE*BLOCK_SIZE)*NREPEATS/8/time/1e9; // TODO: calculate from m, n, k, NREPEATS, time
     printf("%10d %10f %10f %10f", p, time, flops, bandwidth);
 
     double max_err = 0;
