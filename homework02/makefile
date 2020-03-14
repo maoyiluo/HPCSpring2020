@@ -1,5 +1,5 @@
 CFLAGS = -fopenmp -O3
-CC = g++-9
+CC = g++
 
 all: val_test01_solved val_test02_solved omp_bug2 omp_bug3 omp_bug4 omp_bug5 omp_bug6 gs ja
 
